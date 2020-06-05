@@ -12,5 +12,5 @@ Variáveis mensais:
 Fonte dos dados de estações: 
 - INMET, www.inmet.gov.br
 
-Fonte dos GCMs
+Fonte dos GCMs:
 - Ecoclimate, www.ecoclimate.org
