@@ -4,9 +4,6 @@
 # Calculando correlacoes mensais
 ############################################
 
-#library(raster)
-#library(rgdal)
-#library(reshape)
 library(dplyr)
 
 ## carregando dados do inmet
@@ -27,6 +24,39 @@ tasmax <- read.csv("./outputs/2_tasmax_vals.csv")
 tasmin <- read.csv("./outputs/2_tasmin_vals.csv")
 
 gcm_names <- c("CCSM", "CNRM", "FGOALS", "GISS", "IPSL", "MIROC", "MPI", "MRI")
+
+
+## correlações geral inmet x gcms
+
+inmet_mensal <- arrange(inmet_mensal, cod, mes)
+prec <- arrange(prec, cod, month_n)
+tasmax <- arrange(tasmax, cod, month_n)
+tasmin <- arrange(tasmin, cod, month_n)
+
+cor_results <- matrix(NA, nrow = 8, ncol = 6)
+for(i in 1:8){
+  cor_prec <- cor.test(inmet_mensal$prec,
+                       prec[ ,i+4],
+                       method = "pearson")
+  cor_results[i,1] <- cor_prec$estimate
+  cor_results[i,2] <- cor_prec$p.value
+  cor_tasmax <- cor.test(inmet_mensal$tasmax,
+                         tasmax[ ,i+4],
+                         method = "pearson")
+  cor_results[i,3] <- cor_tasmax$estimate
+  cor_results[i,4] <- cor_tasmax$p.value
+  cor_tasmin <- cor.test(inmet_mensal$tasmin,
+                         tasmin[ ,i+4],
+                         method = "pearson")
+  cor_results[i,5] <- cor_tasmin$estimate
+  cor_results[i,6] <- cor_tasmin$p.value
+}
+rownames(cor_results) <- gcm_names
+colnames(cor_results) <- c("prec_r", "prec_p",
+                           "tasmax_r", "tasmax_p",
+                           "tasmin_r", "tasmin_p")
+
+write.csv(cor_results, file = "./outputs/3_cor_results.csv", row.names = TRUE)
 
 
 ## correlacoes mensais pr
@@ -71,8 +101,8 @@ colnames(results_r) <- gcm_names
 colnames(results_p) <- gcm_names
 rownames(results_r) <- c(1:12)
 rownames(results_p) <- c(1:12)
-write.csv(results_r, file = "./outputs/3_pr_ecoclimate_r.csv")
-write.csv(results_p, file = "./outputs/3_pr_ecoclimate_p.csv")
+write.csv(results_r, file = "./outputs/3_moncor_pr_r.csv")
+write.csv(results_p, file = "./outputs/3_moncor_pr_p.csv")
 
 
 ## correlacoes mensais tasmax
@@ -117,8 +147,8 @@ colnames(results_r) <- gcm_names
 colnames(results_p) <- gcm_names
 rownames(results_r) <- c(1:12)
 rownames(results_p) <- c(1:12)
-write.csv(results_r, file = "./outputs/3_tasmax_ecoclimate_r.csv")
-write.csv(results_p, file = "./outputs/3_tasmax_ecoclimate_p.csv")
+write.csv(results_r, file = "./outputs/3_moncor_tasmax_r.csv")
+write.csv(results_p, file = "./outputs/3_moncor_tasmax_p.csv")
 
 
 ## correlacoes mensais tasmin
@@ -163,5 +193,5 @@ colnames(results_r) <- gcm_names
 colnames(results_p) <- gcm_names
 rownames(results_r) <- c(1:12)
 rownames(results_p) <- c(1:12)
-write.csv(results_r, file = "./outputs/3_tasmin_ecoclimate_r.csv")
-write.csv(results_p, file = "./outputs/3_tasmin_ecoclimate_p.csv")
+write.csv(results_r, file = "./outputs/3_moncor_tasmin_r.csv")
+write.csv(results_p, file = "./outputs/3_moncor_tasmin_p.csv")
