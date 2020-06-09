@@ -6,6 +6,7 @@
 
 library(raster)
 library(rgdal)
+library(stringr)
 
 # dados ecoclimate
 
@@ -23,6 +24,7 @@ for(i in 1:8){
   files <- list.files("./big/ecoclimate/pr", full.names = TRUE, pattern = ".bil$", recursive = TRUE)
   files <- grep(files, pattern = gcm_names[i], value = TRUE)
   pr[[i]] <- stack(files)
+  names(pr[[i]]) <- paste0(gcm_names[i], "_", str_sub(names(pr[[i]]), -3, -1))
   pr[[i]] <- crop(pr[[i]], bhrd)
 }
 
@@ -32,6 +34,7 @@ for(i in 1:8){
   files <- list.files("./big/ecoclimate/tasmax", full.names = TRUE, pattern = ".bil$", recursive = TRUE)
   files <- grep(files, pattern = gcm_names[i], value = TRUE)
   tasmax[[i]] <- stack(files)
+  names(tasmax[[i]]) <- paste0(gcm_names[i], "_", str_sub(names(tasmax[[i]]), -3, -1))
   tasmax[[i]] <- crop(tasmax[[i]], bhrd)
 }
 
@@ -41,10 +44,11 @@ for(i in 1:8){
   files <- list.files("./big/ecoclimate/tasmin", full.names = TRUE, pattern = ".bil$", recursive = TRUE)
   files <- grep(files, pattern = gcm_names[i], value = TRUE)
   tasmin[[i]] <- stack(files)
+  names(tasmin[[i]]) <- paste0(gcm_names[i], "_", str_sub(names(tasmin[[i]]), -3, -1))
   tasmin[[i]] <- crop(tasmin[[i]], bhrd)
 }
 
-# salvar listas
+# salvar listas (ocupam menos espaço que rasters)
 
 save(pr, file = "./outputs/1_pr.RData")
 save(tasmax, file = "./outputs/1_tasmax.RData")
