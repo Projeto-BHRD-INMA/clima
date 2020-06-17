@@ -29,8 +29,8 @@ tasmin <- list.files("./big/worldclim/wc2.1_10m_tmin/", full.names = TRUE, patte
   stack() %>%
   crop(bhrd)
 
-# salvar listas (ocupam menos espaço que rasters)
+# salvar objetos (ocupam menos espaço que rasters)
 
-save(pr, file = "./outputs/1_pr.RData")
-save(tasmax, file = "./outputs/1_tasmax.RData")
-save(tasmin, file = "./outputs/1_tasmin.RData")
+save(pr, file = "./outputs/1_worldclim_pr.RData")
+save(tasmax, file = "./outputs/1_worldclim_tasmax.RData")
+save(tasmin, file = "./outputs/1_worldclim_tasmin.RData")
