@@ -37,10 +37,11 @@ png("./figs/4_correl_all_prec.png", res = 300, width = 2000, height = 1100)
 ggplot(data = cors_prec, aes(x = reorder(model, -r3), y = r3, width=.5)) +
   geom_bar(stat = "identity") +
   xlab("") +
-  ylab("") +
+  ylab("Correlação (Pearson)") +
   geom_text(aes(label=r3), vjust=-0.3, size=3.5) +
   geom_text(aes(label=p_prec), vjust=1.6, size=5, color = "white") +
   theme_classic() +
+  theme(axis.text.x = element_text(size = rel(1.35), angle = 00)) +
   ggtitle("Precipitação")
 dev.off()
 
@@ -48,10 +49,11 @@ png("./figs/4_correl_all_tmax.png", res = 300, width = 2000, height = 1100)
 ggplot(data = cors_tmax, aes(x = reorder(model, -r3), y = r3, width=.5)) +
   geom_bar(stat = "identity") +
   xlab("") +
-  ylab("") +
+  ylab("Correlação (Pearson)") +
   geom_text(aes(label=r3), vjust=-0.3, size=3.5) +
   geom_text(aes(label=p_tasmax), vjust=1.6, size=5, color = "white") +
   theme_classic() +
+  theme(axis.text.x = element_text(size = rel(1.35), angle = 00)) +
   ggtitle("Temperatura Máxima")
 dev.off()
 
@@ -59,9 +61,10 @@ png("./figs/4_correl_all_tmin.png", res = 300, width = 2000, height = 1100)
 ggplot(data = cors_tmin, aes(x = reorder(model, -r3), y = r3, width=.5)) +
   geom_bar(stat = "identity") +
   xlab("") +
-  ylab("") +
+  ylab("Correlação (Pearson)") +
   geom_text(aes(label=r3), vjust=-0.3, size=3.5) +
   geom_text(aes(label=p_tasmin), vjust=1.6, size=5, color = "white") +
   theme_classic() +
+  theme(axis.text.x = element_text(size = rel(1.35), angle = 00)) +
   ggtitle("Temperatura Mínima")
 dev.off()
